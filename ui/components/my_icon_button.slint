@@ -1,9 +1,13 @@
+import { Palette } from "std-widgets.slint";
 export component MyIconButton inherits Rectangle {
     in property <image> clicked_icon_path;
     in property <image> hover_icon_path;
     in property <image> normal_icon_path;
     in property <length> icon_height: 14px;
     in property <length> icon_width: 14px;
+    in-out property <string> state: "normal";
+
+    callback icon_clicked();
 
     height: icon_height;
     width: icon_width;
@@ -11,22 +15,31 @@ export component MyIconButton inherits Rectangle {
     clip: true;
 
     ta := TouchArea {
+        width: parent.width;
+        height: parent.height;
         ta_img := Image {
             height: root.height;
             width: root.width;
             source: root.normal_icon_path;
         }
+
+        clicked => {
+            root.icon_clicked()
+        }
     }
 
     states [
-        mouseover when ta.has-hover && !ta.pressed: {
+        hover when ta.has-hover && !ta.pressed: {
             ta_img.source: root.hover_icon_path;
+            root.state: "button hover";
         }
         pressed when ta.pressed: {
             ta_img.source: root.clicked_icon_path;
+            root.state: "button press";
         }
         hover_pressed when ta.has-hover && ta.pressed: {
             ta_img.source: root.clicked_icon_path;
+            root.state: "button click";
         }
     ]
 }

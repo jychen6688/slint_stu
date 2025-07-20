@@ -1,36 +1,21 @@
-import { HeaderBar } from "header_bar/macos_header_bar.slint";
 import { FooterBar } from "footer_bar/footer_bar.slint";
 import { MainWindow } from "main_window/main_window.slint";
 
-export component APP inherits Window {
-    callback drag_window(x: length, y: length);
-    in-out property <bool> is_dragging:false;
+import { DragWindow,WindowStore } from "global.slint";
+import { HeaderBar } from "header_bar/macos_header_bar.slint";
+import { VerticalBox } from "std-widgets.slint";
+export { DragWindow, WindowStore } from "global.slint";
 
-    width: 1600px;
-    height: 860px;
+export component APP inherits Window {
+    callback drag_alias(length, length);
+    in-out property <bool> is_dragging:false;
+    preferred-width: 1600px;
+    preferred-height: 860px;
     background: transparent;
     no-frame: true;
 
     VerticalLayout {
-        alignment: center;
-        HeaderBar {
-            TouchArea {
-                mouse-cursor: pointer;
-                // 限制只有鼠标左键点击时才触发窗口移动
-                pointer-event(ev) => {
-                    if (ev.button == PointerEventButton.left && ev.kind == PointerEventKind.down) {
-                        root.is_dragging = true;
-                    } else if (ev.kind == PointerEventKind.up || ev.kind == PointerEventKind.cancel) {
-                        root.is_dragging = false;
-                    }
-                }
-                moved => {
-                    if (is_dragging) {
-                        root.drag_window(self.mouse-x - self.pressed-x, self.mouse-y - self.pressed-y);
-                    }
-                }
-            }
-        }
+        HeaderBar { }
 
         MainWindow { }
 

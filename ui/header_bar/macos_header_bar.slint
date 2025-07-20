@@ -1,6 +1,6 @@
 import { HorizontalBox } from "std-widgets.slint";
 import { MyIconButton } from "../components/my_icon_button.slint";
-
+import { DragWindow, WindowStore } from "../global.slint";
 // 顶部工具栏
 export component HeaderBar inherits Rectangle {
     height: 35px;
@@ -9,28 +9,72 @@ export component HeaderBar inherits Rectangle {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 
-    traffic_light_area := Rectangle {
-        VerticalLayout {
-            alignment: center;
-            HorizontalBox {
-                padding-left: 12px;
-                red_close := MyIconButton {
-                    max-height: 14px;
-                    normal_icon_path: @image-url("../../assets/macos-traffic-light-buttons/1-close-1-normal.svg");
-                    hover_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-close-2-hover.svg");
-                    clicked_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-close-3-press.svg");
-                }
+    // callback drag_window(x: length, y: length);
+    in-out property <bool> is_dragging:false;
 
-                yellow_minimal := MyIconButton {
-                    normal_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-minimize-1-normal.svg");
-                    hover_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-minimize-2-hover.svg");
-                    clicked_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-close-3-press.svg");
-                }
+    HorizontalLayout {
 
-                green_max := MyIconButton {
-                    normal_icon_path: @image-url("../../assets/macos-traffic-light-buttons/3-maximize-1-normal.svg");
-                    hover_icon_path: @image-url("../../assets/macos-traffic-light-buttons/3-maximize-2-hover.svg");
-                    clicked_icon_path: @image-url("../../assets/macos-traffic-light-buttons/3-maximize-3-press.svg");
+        traffic_light_area := Rectangle {
+            VerticalLayout {
+                alignment: center;
+                Rectangle {
+                    width: 100px;
+                    HorizontalBox {
+                        padding-left: 12px;
+                        red_close := MyIconButton {
+                            max-height: 14px;
+                            normal_icon_path: @image-url("../../assets/macos-traffic-light-buttons/1-close-1-normal.svg");
+                            hover_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-close-2-hover.svg");
+                            clicked_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-close-3-press.svg");
+                            icon_clicked => {
+                                WindowStore.close()
+                            }
+                        }
+
+                        yellow_minimal := MyIconButton {
+                            normal_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-minimize-1-normal.svg");
+                            hover_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-minimize-2-hover.svg");
+                            clicked_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-minimize-3-press.svg");
+                            icon_clicked => {
+                                WindowStore.min()
+                            }
+                        }
+
+                        green_max := MyIconButton {
+                            normal_icon_path: @image-url("../../assets/macos-traffic-light-buttons/3-maximize-1-normal.svg");
+                            hover_icon_path: @image-url("../../assets/macos-traffic-light-buttons/3-maximize-2-hover.svg");
+                            clicked_icon_path: @image-url("../../assets/macos-traffic-light-buttons/3-maximize-3-press.svg");
+                            icon_clicked => {
+                                WindowStore.max()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        navigation := Rectangle {
+            Text {
+                text: red_close.state;
+                vertical-alignment: center;
+                color: white;
+                font-size: 14px;
+            }
+        }
+
+        TouchArea {
+            mouse-cursor: pointer;
+            // 限制只有鼠标左键点击时才触发窗口移动
+            pointer-event(ev) => {
+                if (ev.button == PointerEventButton.left && ev.kind == PointerEventKind.down) {
+                    root.is_dragging = true;
+                } else if (ev.kind == PointerEventKind.up || ev.kind == PointerEventKind.cancel) {
+                    root.is_dragging = false;
+                }
+            }
+            moved => {
+                if (is_dragging) {
+                    DragWindow.drag_window(self.mouse-x - self.pressed-x, self.mouse-y - self.pressed-y);
                 }
             }
         }
