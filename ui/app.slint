@@ -9,8 +9,8 @@ export { DragWindow, WindowStore } from "global.slint";
 export component APP inherits Window {
     callback drag_alias(length, length);
     in-out property <bool> is_dragging:false;
-    preferred-width: 1600px;
-    preferred-height: 860px;
+    min-width: 900px;
+    min-height: 600px;
     background: transparent;
     no-frame: true;
 

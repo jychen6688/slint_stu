@@ -1,9 +1,14 @@
 import { LSidebar } from "l_sidebar.slint";
+import { Terminal } from "terminal.slint";
 export component MainWindow inherits Rectangle {
-    height: 790px;
-    width: 1600px;
+    // height: 790px;
+    // width: 1600px;
     background: #25272D;
+    horizontal-stretch: 1;
+    vertical-stretch: 1;
     HorizontalLayout {
         LSidebar { }
+
+        Terminal { }
     }
 }
