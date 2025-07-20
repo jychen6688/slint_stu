@@ -1,4 +1,6 @@
 import { HorizontalBox } from "std-widgets.slint";
+import { MyIconButton } from "../components/my_icon_button.slint";
+
 // 顶部工具栏
 export component HeaderBar inherits Rectangle {
     height: 35px;
@@ -11,30 +13,24 @@ export component HeaderBar inherits Rectangle {
         VerticalLayout {
             alignment: center;
             HorizontalBox {
-                padding: 8px;
-                padding-left: 8px;
-                Rectangle {
-                    height: 13px;
-                    width: self.height;
-                    border-radius: self.height / 2;
-                    clip: true;
-                    background: red;
+                padding-left: 12px;
+                red_close := MyIconButton {
+                    max-height: 14px;
+                    normal_icon_path: @image-url("../../assets/macos-traffic-light-buttons/1-close-1-normal.svg");
+                    hover_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-close-2-hover.svg");
+                    clicked_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-close-3-press.svg");
                 }
 
-                Rectangle {
-                    height: 13px;
-                    width: self.height;
-                    border-radius: self.height / 2;
-                    clip: true;
-                    background: yellow;
+                yellow_minimal := MyIconButton {
+                    normal_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-minimize-1-normal.svg");
+                    hover_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-minimize-2-hover.svg");
+                    clicked_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-close-3-press.svg");
                 }
 
-                Rectangle {
-                    height: 13px;
-                    width: self.height;
-                    border-radius: self.height / 2;
-                    clip: true;
-                    background: green;
+                green_max := MyIconButton {
+                    normal_icon_path: @image-url("../../assets/macos-traffic-light-buttons/3-maximize-1-normal.svg");
+                    hover_icon_path: @image-url("../../assets/macos-traffic-light-buttons/3-maximize-2-hover.svg");
+                    clicked_icon_path: @image-url("../../assets/macos-traffic-light-buttons/3-maximize-3-press.svg");
                 }
             }
         }

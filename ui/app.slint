@@ -1,20 +1,33 @@
 import { HeaderBar } from "header_bar/macos_header_bar.slint";
-import { FooterBar } from "footer_bar.slint";
+import { FooterBar } from "footer_bar/footer_bar.slint";
 import { MainWindow } from "main_window/main_window.slint";
 
 export component APP inherits Window {
+    callback drag_window(x: length, y: length);
+    in-out property <bool> is_dragging:false;
+
     width: 1600px;
     height: 860px;
     background: transparent;
     no-frame: true;
-    callback drag_window(x: length, y: length);
 
     VerticalLayout {
         alignment: center;
         HeaderBar {
             TouchArea {
+                mouse-cursor: pointer;
+                // 限制只有鼠标左键点击时才触发窗口移动
+                pointer-event(ev) => {
+                    if (ev.button == PointerEventButton.left && ev.kind == PointerEventKind.down) {
+                        root.is_dragging = true;
+                    } else if (ev.kind == PointerEventKind.up || ev.kind == PointerEventKind.cancel) {
+                        root.is_dragging = false;
+                    }
+                }
                 moved => {
-                    root.drag_window(self.mouse-x - self.pressed-x, self.mouse-y - self.pressed-y)
+                    if (is_dragging) {
+                        root.drag_window(self.mouse-x - self.pressed-x, self.mouse-y - self.pressed-y);
+                    }
                 }
             }
         }

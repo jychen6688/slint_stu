@@ -1,0 +1,32 @@
+export component MyIconButton inherits Rectangle {
+    in property <image> clicked_icon_path;
+    in property <image> hover_icon_path;
+    in property <image> normal_icon_path;
+    in property <length> icon_height: 14px;
+    in property <length> icon_width: 14px;
+
+    height: icon_height;
+    width: icon_width;
+    border-radius: self.height / 2;
+    clip: true;
+
+    ta := TouchArea {
+        ta_img := Image {
+            height: root.height;
+            width: root.width;
+            source: root.normal_icon_path;
+        }
+    }
+
+    states [
+        mouseover when ta.has-hover && !ta.pressed: {
+            ta_img.source: root.hover_icon_path;
+        }
+        pressed when ta.pressed: {
+            ta_img.source: root.clicked_icon_path;
+        }
+        hover_pressed when ta.has-hover && ta.pressed: {
+            ta_img.source: root.clicked_icon_path;
+        }
+    ]
+}
