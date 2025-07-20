@@ -1,5 +1,26 @@
+import { HeaderBar } from "header_bar/macos_header_bar.slint";
+import { FooterBar } from "footer_bar.slint";
+import { MainWindow } from "main_window/main_window.slint";
+
 export component APP inherits Window {
-    width: 900px;
-    height: 600px;
-    background: black;
+    width: 1600px;
+    height: 860px;
+    background: transparent;
+    no-frame: true;
+    callback drag_window(x: length, y: length);
+
+    VerticalLayout {
+        alignment: center;
+        HeaderBar {
+            TouchArea {
+                moved => {
+                    root.drag_window(self.mouse-x - self.pressed-x, self.mouse-y - self.pressed-y)
+                }
+            }
+        }
+
+        MainWindow { }
+
+        FooterBar { }
+    }
 }

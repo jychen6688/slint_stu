@@ -1,0 +1,42 @@
+import { HorizontalBox } from "std-widgets.slint";
+// 顶部工具栏
+export component HeaderBar inherits Rectangle {
+    height: 35px;
+    width: 1600px;
+    background: #353943;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+
+    traffic_light_area := Rectangle {
+        VerticalLayout {
+            alignment: center;
+            HorizontalBox {
+                padding: 8px;
+                padding-left: 8px;
+                Rectangle {
+                    height: 13px;
+                    width: self.height;
+                    border-radius: self.height / 2;
+                    clip: true;
+                    background: red;
+                }
+
+                Rectangle {
+                    height: 13px;
+                    width: self.height;
+                    border-radius: self.height / 2;
+                    clip: true;
+                    background: yellow;
+                }
+
+                Rectangle {
+                    height: 13px;
+                    width: self.height;
+                    border-radius: self.height / 2;
+                    clip: true;
+                    background: green;
+                }
+            }
+        }
+    }
+}
