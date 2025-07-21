@@ -3,7 +3,7 @@ import { MyIconButton } from "../components/my_icon_button.slint";
 import { DragWindow, WindowStore } from "../global.slint";
 // 顶部工具栏
 export component HeaderBar inherits Rectangle {
-    height: 35px;
+    height: 36px;
     // width: 1600px;
     background: #353943;
     border-top-left-radius: 10px;
@@ -22,7 +22,6 @@ export component HeaderBar inherits Rectangle {
                     HorizontalBox {
                         padding-left: 12px;
                         red_close := MyIconButton {
-                            max-height: 14px;
                             normal_icon_path: @image-url("../../assets/macos-traffic-light-buttons/1-close-1-normal.svg");
                             hover_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-close-2-hover.svg");
                             clicked_icon_path: @image-url("../../assets/macos-traffic-light-buttons/2-close-3-press.svg");

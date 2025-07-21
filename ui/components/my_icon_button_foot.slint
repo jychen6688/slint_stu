@@ -1,0 +1,44 @@
+import { Palette } from "std-widgets.slint";
+export component MyIconButton inherits Rectangle {
+    in property <image> clicked_icon_path;
+    in property <image> hover_icon_path;
+    in property <image> normal_icon_path;
+    in property <length> icon_height: 16px;
+    in property <length> icon_width: 16px;
+    in-out property <string> state: "normal";
+    in property <bool> selected: false;  // 新增：选中状态
+    callback icon_clicked();
+
+    height: icon_height;
+    width: icon_width;
+    clip: true;
+    ta := TouchArea {
+        width: parent.width;
+        height: parent.height;
+        ta_img := Image {
+            height: root.height;
+            width: root.width;
+            source: root.normal_icon_path;
+            colorize: root.selected ? #7AA4E2 : #ffffff;  // 新增：默认白色，选中蓝色
+        }
+
+        clicked => {
+            root.icon_clicked()
+        }
+    }
+
+    states [
+        hover when ta.has-hover && !ta.pressed: {
+            ta_img.source: root.hover_icon_path;
+            root.state: "button hover";
+        }
+        pressed when ta.pressed: {
+            ta_img.source: root.clicked_icon_path;
+            root.state: "button press";
+        }
+        hover_pressed when ta.has-hover && ta.pressed: {
+            ta_img.source: root.clicked_icon_path;
+            root.state: "button click";
+        }
+    ]
+}

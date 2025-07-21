@@ -6,7 +6,7 @@ export component MyIconButton inherits Rectangle {
     in property <length> icon_height: 14px;
     in property <length> icon_width: 14px;
     in-out property <string> state: "normal";
-
+    in property <bool> selected: false;  // 新增：选中状态
     callback icon_clicked();
 
     height: icon_height;

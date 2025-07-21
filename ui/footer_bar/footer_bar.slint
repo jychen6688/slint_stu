@@ -1,7 +1,62 @@
+import { HorizontalBox } from "std-widgets.slint";
+import { MyIconButton } from "../components/my_icon_button_foot.slint";
+import { WindowStore } from "../global.slint";
 // 顶部工具栏
 export component FooterBar inherits Rectangle {
     height: 35px;
+    // width: 1600px;
     background: #353943;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    in-out property <int> current_selected: 0;  // 新增：跟踪选中索引
+    HorizontalLayout {
+
+        down_navi := Rectangle {
+            VerticalLayout {
+                alignment: center;
+                HorizontalLayout {
+                    spacing: 12px;
+                    padding-left: 12px;
+                    servers := MyIconButton {
+                        normal_icon_path: @image-url("../../assets/zed_icons/file_tree.svg");
+                        hover_icon_path: @image-url("../../assets/zed_icons/file_tree.svg");
+                        clicked_icon_path: @image-url("../../assets/zed_icons/file_tree.svg");
+                        selected: root.current_selected == 0;
+                        icon_clicked => {
+                            root.current_selected = 0;
+                        }
+                    }
+
+                    sessions := MyIconButton {
+                        normal_icon_path: @image-url("../../assets/zed_icons/link.svg");
+                        hover_icon_path: @image-url("../../assets/zed_icons/link.svg");
+                        clicked_icon_path: @image-url("../../assets/zed_icons/link.svg");
+                        selected: root.current_selected == 1;
+                        icon_clicked => {
+                            root.current_selected = 1;
+                        }
+                    }
+
+                    scripts := MyIconButton {
+                        normal_icon_path: @image-url("../../assets/zed_icons/code.svg");
+                        hover_icon_path: @image-url("../../assets/zed_icons/code.svg");
+                        clicked_icon_path: @image-url("../../assets/zed_icons/code.svg");
+                        selected: root.current_selected == 2;
+                        icon_clicked => {
+                            root.current_selected = 2;
+                        }
+                    }
+                }
+            }
+        }
+
+        navigation := Rectangle {
+            Text {
+                text: servers.state;
+                vertical-alignment: center;
+                color: white;
+                font-size: 14px;
+            }
+        }
+    }
 }
