@@ -1,0 +1,48 @@
+import { MyIconButton } from "my_icon_button.slint";
+export component MyIconMenu inherits Rectangle {
+
+    in-out property <bool> selected: false;
+    in property <length> l_padding;
+    in property <string> menu_name;
+    callback is_clicked();
+    height: 25px;
+    border-color: selected ? rebeccapurple : transparent;
+    border-width: 1px;
+
+    VerticalLayout {
+        height: root.height;
+        alignment: center;
+        HorizontalLayout {
+            padding-left: root.l_padding;
+            spacing: 5px;
+            alignment: start;
+            Rectangle {
+                height: root.height;
+                MyIconButton {
+                    height: 15px;
+                    normal_icon_path: @image-url("../../assets/zed_icons/folder.svg");
+                    hover_icon_path: @image-url("../../assets/zed_icons/folder.svg");
+                    clicked_icon_path: @image-url("../../assets/zed_icons/folder_open.svg");
+                    icon_color: white;
+                    selected: root.selected;
+                    icon_clip: false;
+                }
+            }
+
+            Text {
+                text: root.menu_name;
+                font-size: 14px;
+                vertical-alignment: center;
+                horizontal-alignment: left;
+                color: white;
+            }
+        }
+    }
+
+    TouchArea {
+        clicked => {
+            root.is_clicked();
+        }
+        mouse-cursor: pointer;
+    }
+}

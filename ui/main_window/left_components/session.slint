@@ -1,0 +1,35 @@
+import { MyIconMenu } from "../../components/my_menu.slint";
+export component SessionCollection inherits Rectangle {
+    in-out property <length> l_padding: 10px;
+    in-out property <int> current_selected:0;
+    VerticalLayout {
+        alignment: start;
+        spacing: 3px;
+        MyIconMenu {
+            l_padding: 10px;
+            menu_name: "小白云";
+            selected: root.current_selected == 0;
+            is_clicked => {
+                root.current_selected = 0;
+            }
+        }
+
+        MyIconMenu {
+            l_padding: 10px;
+            menu_name: "IFLYTEK";
+            selected: root.current_selected == 1;
+            is_clicked => {
+                root.current_selected = 1;
+            }
+        }
+
+        MyIconMenu {
+            l_padding: 10px;
+            menu_name: "Localhost";
+            selected: root.current_selected == 3;
+            is_clicked => {
+                root.current_selected = 3;
+            }
+        }
+    }
+}

@@ -8,11 +8,13 @@ export component MyIconButton inherits Rectangle {
     in-out property <string> state: "normal";
     in property <bool> selected: false;  // 新增：选中状态
     callback icon_clicked();
+    in-out property <color> icon_color;
+    in-out property <bool> icon_clip: true;
 
     height: icon_height;
     width: icon_width;
     border-radius: self.height / 2;
-    clip: true;
+    clip: icon_clip;
 
     ta := TouchArea {
         width: parent.width;
@@ -20,11 +22,12 @@ export component MyIconButton inherits Rectangle {
         ta_img := Image {
             height: root.height;
             width: root.width;
-            source: root.normal_icon_path;
+            source: selected?clicked_icon_path:root.normal_icon_path;
+            colorize: root.icon_color;
         }
 
         clicked => {
-            root.icon_clicked()
+            root.icon_clicked();
         }
     }
 

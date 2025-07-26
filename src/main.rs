@@ -33,12 +33,11 @@ fn main() {
         let app = app_weak.unwrap();
         let window = app.window();
         // 切换 实现最大化：切换全屏/最大化
-        // if window.is_fullscreen() {
-        //     window.set_fullscreen(false); // 切换回正常
-        // } else {
-        //     window.set_fullscreen(true); // 进入全屏
-        // }
-        window.set_maximized(true);
+        if window.is_fullscreen() {
+            window.set_fullscreen(false);
+        } else {
+            window.set_fullscreen(true);
+        }
     });
 
     app.run().unwrap();

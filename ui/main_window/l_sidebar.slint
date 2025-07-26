@@ -1,13 +1,13 @@
-// 顶部工具栏
-export component LSidebar inherits Rectangle {
-    // height: 790px;
-    // min-width: 200px;
-    width: 240px;
-    // preferred-width: 200px;
-    background: #2B2E36;
+import { SessionCollection } from "left_components/session.slint";
 
-    Text {
-        text: "侧边栏内容";
-        color: white;
+// 左侧会话栏
+export component LSidebar inherits Rectangle {
+
+    width: 240px;
+    background: #2B2E36;
+    
+    SessionCollection { 
+        width: parent.width;
+        height: parent.height;
     }
 }

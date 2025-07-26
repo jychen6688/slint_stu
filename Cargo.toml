@@ -5,7 +5,8 @@ edition = "2024"
 
 [dependencies]
 slint = "1.12.1"
-
+portable-pty = "0.8.1"
+tokio = { version = "1", features = ["full"] } # 配套更新 objc2
 
 [build-dependencies]
 slint-build = "1.12.1"
